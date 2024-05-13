@@ -61,29 +61,19 @@ export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [favouriteProducts, setFavouriteProducts] = useState<Product[]>([]);
 
   const queryDebounced = useDebounce(query, 300);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const productsData = await api.search();
-
-        setProducts(productsData);
-      } catch (error) {
-        console.log("Error fetching products");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
         const productsData = await api.search(queryDebounced);
+
+        productsData.map((product) => ({
+          ...product,
+          isFavourite: false,
+        }));
 
         setProducts(productsData);
       } catch (error) {
@@ -95,6 +85,15 @@ export default function HomePage() {
 
     fetchProducts();
   }, [queryDebounced]);
+
+  const handleToggleFavorite = (id: number) => {
+    setProducts((prevProducts) => {
+      return prevProducts.map((product) => ({
+        ...product,
+        isFavorite: product.id === id ? !product.isFavorite : product.isFavorite,
+      }));
+    });
+  };
 
   if (isLoading) {
     return (
@@ -125,8 +124,10 @@ export default function HomePage() {
             key={product.id}
             description={product.description}
             id={product.id}
+            isFavorite={product.isFavorite}
             price={product.price}
             title={product.title}
+            toggleFavorite={() => handleToggleFavorite(product.id)}
           />
         ))}
       </div>

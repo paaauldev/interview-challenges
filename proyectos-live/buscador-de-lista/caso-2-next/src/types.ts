@@ -3,4 +3,6 @@ export interface Product {
   title: string;
   description: string;
   price: number;
+  isFavorite?: boolean;
+  toggleFavorite?: () => void;
 }
