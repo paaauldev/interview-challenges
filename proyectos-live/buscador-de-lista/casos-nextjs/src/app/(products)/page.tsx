@@ -56,7 +56,7 @@ export default function HomePage() {
 
   return (
     <main className="flex flex-col items-center justify-center text-center">
-      <div className="pb-4">
+      <div className="flex flex-col gap-4 pb-4">
         <h1 className="text-2xl">Tienda digitaloncy</h1>
         <Input
           name="text"
