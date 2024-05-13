@@ -107,6 +107,7 @@ export default function HomePage() {
             name="text"
             placeholder="tv"
             type="text"
+            value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
