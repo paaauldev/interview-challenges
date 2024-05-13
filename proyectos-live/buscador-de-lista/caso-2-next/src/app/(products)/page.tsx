@@ -43,10 +43,26 @@ function Recommended() {
   );
 }
 
+function useDebounce(query: string, delay = 300) {
+  const [debouncedQuery, setDebouncedQuery] = useState<string>("");
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, delay);
+
+    return () => clearTimeout(timeout);
+  }, [query, delay]);
+
+  return debouncedQuery;
+}
+
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const queryDebounced = useDebounce(query, 300);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -67,7 +83,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const productsData = await api.search(query);
+        const productsData = await api.search(queryDebounced);
 
         setProducts(productsData);
       } catch (error) {
@@ -78,7 +94,7 @@ export default function HomePage() {
     };
 
     fetchProducts();
-  }, [query]);
+  }, [queryDebounced]);
 
   if (isLoading) {
     return (
