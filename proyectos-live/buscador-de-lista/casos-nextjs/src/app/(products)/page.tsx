@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 "use client";
 import type { Product } from "@/types";
 
@@ -22,9 +23,9 @@ type SortType = "NAME" | "PRICE";
 
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState<string>(localStorage.getItem("query")! || "");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [sort, setSort] = useState<SortType>("NAME");
+  const [sort, setSort] = useState<SortType>((localStorage.getItem("sort") as SortType) || "NAME");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -55,6 +56,7 @@ export default function HomePage() {
       }
     };
 
+    localStorage.setItem("query", query);
     fetchProducts();
   }, [query]);
 
@@ -64,6 +66,8 @@ export default function HomePage() {
     if (sort === "NAME") result.sort((a, b) => a.title.localeCompare(b.title));
 
     if (sort === "PRICE") result.sort((a, b) => a.price - b.price);
+
+    localStorage.setItem("sort", sort);
 
     return result;
   }, [products, sort]);
