@@ -61,7 +61,6 @@ export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [favouriteProducts, setFavouriteProducts] = useState<Product[]>([]);
 
   const queryDebounced = useDebounce(query, 300);
 
