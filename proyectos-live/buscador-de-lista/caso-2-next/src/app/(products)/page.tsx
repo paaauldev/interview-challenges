@@ -7,25 +7,46 @@ import { Loader2 } from "lucide-react";
 
 import api from "@/api";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import ProductCard from "./product-card";
 
-type SortType = "NAME" | "PRICE";
+function Recommended() {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    api.search().then(setProducts);
+  }, []);
+
+  const recommendedProducts = useMemo(() => {
+    const result = [...products];
+
+    return result.sort(() => (Math.random() > 0.5 ? 1 : -1)).slice(0, 2);
+  }, [products]);
+
+  return (
+    <>
+      <div className="flex w-full flex-col gap-2">
+        <h1 className="text-2xl">Productos recomendados</h1>
+      </div>
+      <div className="flex w-full flex-col gap-4">
+        {recommendedProducts.map((product) => (
+          <ProductCard
+            key={product.id}
+            description={product.description}
+            id={product.id}
+            price={product.price}
+            title={product.title}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
 
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [query, setQuery] = useState<string>(localStorage.getItem("query")! || "");
+  const [query, setQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [sort, setSort] = useState<SortType>((localStorage.getItem("sort") as SortType) || "NAME");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -56,21 +77,8 @@ export default function HomePage() {
       }
     };
 
-    localStorage.setItem("query", query);
     fetchProducts();
   }, [query]);
-
-  const sortedProducts = useMemo(() => {
-    const result = [...products];
-
-    if (sort === "NAME") result.sort((a, b) => a.title.localeCompare(b.title));
-
-    if (sort === "PRICE") result.sort((a, b) => a.price - b.price);
-
-    localStorage.setItem("sort", sort);
-
-    return result;
-  }, [products, sort]);
 
   if (isLoading) {
     return (
@@ -85,23 +93,6 @@ export default function HomePage() {
       <div className="flex w-full flex-col gap-2">
         <h1 className="text-2xl">Tienda digitaloncy</h1>
         <div className="flex w-auto flex-row justify-between">
-          <Select
-            defaultValue={sort}
-            onValueChange={(e) => {
-              setSort(e.toString() as SortType);
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder={sort} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Sort by</SelectLabel>
-                <SelectItem value="NAME">Name</SelectItem>
-                <SelectItem value="PRICE">Price</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
           <Input
             className="w-1/4"
             name="text"
@@ -113,7 +104,7 @@ export default function HomePage() {
         </div>
       </div>
       <div className="flex w-full flex-col gap-4">
-        {sortedProducts.map((product) => (
+        {products.map((product) => (
           <ProductCard
             key={product.id}
             description={product.description}
@@ -123,6 +114,7 @@ export default function HomePage() {
           />
         ))}
       </div>
+      <Recommended />
     </main>
   );
 }

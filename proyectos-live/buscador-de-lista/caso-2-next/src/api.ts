@@ -1,4 +1,4 @@
-import { type Product } from "./types";
+import {Product} from "./types";
 
 const PRODUCTS: Product[] = [
   {
@@ -39,7 +39,7 @@ const api = {
 
     if (query) {
       results = results.filter((product) => {
-        return product.title.toLowerCase().includes(query.toLowerCase());
+        return product.title.includes(query);
       });
     }
 
