@@ -4,6 +4,7 @@ import type { Product } from "@/types";
 import { useEffect, useState } from "react";
 
 import api from "@/api";
+import { Input } from "@/components/ui/input";
 
 import ProductCard from "./product-card";
 
@@ -26,14 +27,29 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    api.search(query);
+    const fetchProducts = async () => {
+      try {
+        const productsData = await api.search(query);
+
+        setProducts(productsData);
+      } catch (error) {
+        console.log("Error fetching products");
+      }
+    };
+
+    fetchProducts();
   }, [query]);
 
   return (
     <main className="flex flex-col items-center justify-center text-center">
       <div className="pb-4">
-        <h1>Tienda digitaloncy</h1>
-        <input name="text" placeholder="tv" type="text" onChange={(e) => setQuery(e.target)} />
+        <h1 className="text-2xl">Tienda digitaloncy</h1>
+        <Input
+          name="text"
+          placeholder="tv"
+          type="text"
+          onChange={(e) => setQuery(e.target.value)}
+        />
       </div>
       <div>
         {products.map((product) => (
