@@ -1,15 +1,13 @@
-## Getting Started with caso-2-nextjs
+# Ejercicios de entrevista
 
-First, run the development server:
+## Nivel 1
+- [✅] Podemos agregar elementos vacíos
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Nivel 2
+- [✅] Se agregan elementos vacíos a pesar de tener todo bien
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Nivel 3
+- [✅] Nuestra función de toggle no está implementada
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Extra
+- [✅] Quiero simular un delay en la carga de datos de 1 segundo

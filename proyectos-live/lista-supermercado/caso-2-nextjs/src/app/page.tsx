@@ -17,12 +17,14 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   function handleToggle(id: Item["id"]) {
-    // Should implement
+    setItems((items) =>
+      items.map((item) => (item.id === id ? { ...item, completed: !item.completed } : item)),
+    );
   }
 
   function handleAdd(event: React.ChangeEvent<Form>) {
     event.preventDefault();
-
+    if (!event.target.text.value) return;
     setItems((items) =>
       items.concat({
         id: +new Date(),
