@@ -4,7 +4,7 @@
 - [ ] Hay un warning en la consola
 
 ## Nivel 2
-- [✅] La aplicación crashea al iniciar
+- [ ] La aplicación crashea al iniciar
 
 ## Nivel 3
 - [ ] Nuestra función de eliminar no está implementada
