@@ -14,18 +14,33 @@ function App() {
     api.list().then(setItems);
   }, []);
 
+  const handleClick = (id: number) => {
+    setItems((prevItems) =>
+      prevItems.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            completed: !item.completed,
+          };
+        }
+
+        return item;
+      }),
+    );
+  };
+
   return (
     <main className="grid h-full w-full place-content-center p-6">
       <h1>Supermarket list</h1>
       <form>
-        <input name="text" type="text" />
+        <input autoFocus name="text" type="text" />
         <Button>Add</Button>
       </form>
       <ul>
         {items
-          ? items.map((item, index) => (
-              <li key={index} className={item.completed ? "line-through" : ""}>
-                {item.text} <Button>[X]</Button>
+          ? items.map((item) => (
+              <li key={item.id} className={item.completed ? "line-through" : ""}>
+                {item.text} <Button onClick={() => handleClick(item.id)}>X</Button>
               </li>
             ))
           : null}
