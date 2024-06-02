@@ -15,6 +15,7 @@ interface Form extends HTMLFormElement {
 function App() {
   const [items, setItems] = useState<Item[]>([]);
   const [inputContent, setInputContent] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleToggle(id: Item["id"]) {
     setItems((items) =>
@@ -39,10 +40,14 @@ function App() {
   }
 
   useEffect(() => {
-    api.list().then(setItems);
+    setIsLoading(true);
+    api
+      .list()
+      .then(setItems)
+      .then(() => setIsLoading(false));
   }, []);
 
-  if (!items.length)
+  if (isLoading)
     return (
       <div className="mt-5 flex h-full w-full items-center justify-center">
         <Loader className="h-8 w-8 animate-spin text-muted-foreground" />
