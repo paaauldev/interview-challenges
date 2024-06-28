@@ -7,7 +7,7 @@ Mucha suerte en el camino!
 
 ## Índice
 * ✅ [Búsqueda de productos](./buscador-de-lista) - [STREAM](https://www.youtube.com/watch?v=SG5FFwLDuSQ)
-* [Lista de supermercado](./lista-supermercado) - [STREAM](https://www.youtube.com/watch?v=ocwsPB1ysOQ)
+* ✅[Lista de supermercado](./lista-supermercado) - [STREAM](https://www.youtube.com/watch?v=ocwsPB1ysOQ)
 * [Wordle](./wordle) - [STREAM](https://www.youtube.com/watch?v=xsZZc9PRqFM)
 * [Tienda Pokemon](./tienda-pokemon) - [STREAM](https://www.youtube.com/watch?v=FGiAy0GUrDI)
 * [Lista de archivos + algoritmos (Dan Abramov)](./dan-abramov) - [STREAM](https://www.youtube.com/watch?v=-w-P4u0x8ig)
