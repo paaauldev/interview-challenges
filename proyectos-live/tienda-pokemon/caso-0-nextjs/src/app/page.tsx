@@ -38,7 +38,6 @@ function App() {
               src={pokemon.image}
               width={100}
             />
-            {console.log({ pokemon })}
             <div>
               <p>
                 {pokemon.name} {pokemon.price}$
