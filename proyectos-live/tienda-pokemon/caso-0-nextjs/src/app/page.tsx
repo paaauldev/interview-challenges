@@ -4,13 +4,27 @@ import Image from "next/image";
 
 import api from "@/api";
 import { type Pokemon } from "@/types";
+import { Button } from "@/components/ui/button";
 
 function App() {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [items, setItems] = useState(0);
 
   useEffect(() => {
-    api.list().then(setPokemons);
+    setIsLoading(true);
+    api
+      .list()
+      .then(setPokemons)
+      .finally(() => setIsLoading(false));
   }, []);
+
+  if (isLoading) return <p>Cargando...</p>;
+
+  const handleClick = () => {
+    if (items >= 3) return;
+    setItems((prev) => prev + 1);
+  };
 
   return (
     <>
@@ -24,16 +38,19 @@ function App() {
               src={pokemon.image}
               width={100}
             />
+            {console.log({ pokemon })}
             <div>
-              <p>{pokemon.name}</p>
+              <p>
+                {pokemon.name} {pokemon.price}$
+              </p>
               <p>{pokemon.description}</p>
             </div>
-            <button className="nes-btn">Agregar</button>
+            <Button onClick={handleClick}>Agregar</Button>
           </article>
         ))}
       </section>
       <aside>
-        <button className="nes-btn is-primary">0 items</button>
+        <Button>{items} items</Button>
       </aside>
     </>
   );
