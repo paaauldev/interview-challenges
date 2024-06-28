@@ -1,7 +1,7 @@
 # Ejercicios de entrevista
 
 ## Nivel 1
-- [ ] Debería ejecutar la función `handleKeyDown` cada vez que toco una tecla del teclado.
+- [✅] Debería ejecutar la función `handleKeyDown` cada vez que toco una tecla del teclado.
 
 ## Nivel 2
 - [ ] Debería agregar la clase `correct` si la letra está en la posición correcta en relación con la respuesta.
